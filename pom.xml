@@ -358,6 +358,52 @@
     
 
     <profiles>
+    
+        <!-- ### PIRANHA ### -->
+    
+        <profile>
+            <id>piranha-embedded-micro</id>
+    
+            <properties> 
+                <skipEJB>true</skipEJB>
+                <!-- Client-cert needs complicated cert setup, which hasn't been done -->
+                <skipServletClientCertificate>true</skipServletClientCertificate>
+            </properties>
+
+            <dependencies>
+                 <!-- Java EE based client dependencies to contact a server via WebSocket or REST -->
+                <dependency>
+                    <groupId>fish.payara.arquillian</groupId>
+                    <artifactId>payara-client-ee7</artifactId>
+                </dependency>
+              
+                <dependency>
+                     <groupId>cloud.piranha.arquillian</groupId>
+                     <artifactId>piranha-arquillian-server</artifactId>
+                     <version>20.1.2</version>
+                </dependency>
+            </dependencies>
+            
+             <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <javaEEServer>piranha-embedded</javaEEServer>
+                                <piranha.version>20.1.2</piranha.version>
+                                <piranha.offline>false</piranha.offline>
+                                <skipEJB>${skipEJB}</skipEJB>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            
+        </profile>
+    
+    
         
         <!-- ###  PAYARA  ### -->
         
